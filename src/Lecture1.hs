@@ -97,19 +97,10 @@ Try to use local variables (either let-in or where) to implement this
 function.
 -}
 minmax :: Integer->Integer->Integer->Integer
-minmax x y z = (max x y z) - (min x y z) 
+minmax x y z = m - n
     where 
-        max :: Integer->Integer->Integer->Integer
-        max x y z 
-            | x>=y && x>=z = x
-            | y>=x && y>=z = y
-            | z>=y && z>=x = z
-        min :: Integer->Integer->Integer->Integer
-        min x y z
-            | x<y && x<z = x
-            | y<x && y<z = y
-            | z<y && z<x = z
-
+        m = maximum[x,y,z]
+        n = minimum[x,y,z]
 {- | Implement a function that takes a string, start and end positions
 and returns a substring of a given string from the start position to
 the end (including).
@@ -128,8 +119,8 @@ string.
 subString :: Int->Int->[Char]->[Char]
 subString start end str
     | end<0 = ""
-    | start<0 && end>=0 = take end str
-    | start >=0 && end>=0 = drop start . take (end+1) $ str
+    | start<0 = take (end+1) str
+    | otherwise = take ((end + 1) - start) (drop start str)
 
 {- | Write a function that takes a String — space separated numbers,
 and finds a sum of the numbers inside this string.
